@@ -61,7 +61,6 @@ ignore = [
 "tests/*" = ["B011"]
 
 [tool.mypy]
-python_version = "3.10"
 files = ["src", "scripts"]
 strict = true
 warn_return_any = false
