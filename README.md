@@ -48,6 +48,14 @@ Three claims survived:
 3. **The real edge is signal quality, not IC level.** Where the selected composite differs
    from the benchmark it decays more slowly and trades at 35-40% lower turnover.
 
+![The study in one figure: hold-out accuracy per class, robustness to the feature set, class-1 signal decay, and 5-day turnover](docs/figures/nutshell.png)
+
+*The study in one figure (report, Figure 8). A: on the blind hold-out the selected composite
+(blue) sits at or within noise of the benchmark (dark) on every class, while methods the study
+set aside can fail badly (open circles). B: across 80 randomly reduced feature sets it has the
+shallowest worst case. C and D: where it differs from the benchmark, it keeps 62% of its
+day-0 IC a week later instead of 37% and turns over 34-37% less.*
+
 The selected methodology, in one sentence: **count each idea once, weight ideas equally, learn
 feature shapes only where the evidence is strong, and freeze everything.**
 
