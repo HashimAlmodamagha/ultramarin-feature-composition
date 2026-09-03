@@ -1,0 +1,19 @@
+== feature_class_4 (in_sample): 20 variants, 3,130 days, 1,506,322 rows ==
+PC1 share 0.30  (top-3 eigen shares 0.30, 0.26, 0.12)
+orientation: 0 reversed variant(s) []
+dedup at rho=0.7: 20 variants -> 8 ideas
+    block 1: f1, f2, f5, f6
+    block 2: f3, f4, f7, f8
+    block 3: f9, f10
+    block 4: f13, f16, f20
+    block 5: f11, f14
+    block 6: f17
+    block 7: f12, f15
+    block 8: f18, f19
+PLS-k out-of-fold IC: k=1: +0.0188, k=2: +0.0176, k=3: +0.0165, k=4: +0.0155, k=5: +0.0141, k=6: +0.0140, k=7: +0.0145, k=8: +0.0146  (benchmark +0.0165; best k = 1)
+tau^2 DL/PM/REML: 2.37e-05 / 2.37e-05 / 1.86e-05  (block ICs +0.0046, +0.0037, +0.0067, +0.0118, +0.0150, +0.0157, +0.0160, +0.0220)
+reading:
+  - PC1 share 0.30: diffuse spectrum, genuinely multi-factor; the partition matters here and the plain rank-and-average is the likely casualty.
+  - PLS sweep peaks at k=1: one predictive direction; any sensible weighting works.
+  - tau^2 > 0 under all three estimators: the blocks truly differ. Keep equal weights (the tilt lost on the blind test) and flag the class for attention.
+  - Selected composite: dedup at rho=0.7, 8 equal-weight blocks, frozen. Run the shape gate separately before adopting learned shapes.

@@ -1,0 +1,20 @@
+== feature_class_1 (in_sample): 16 variants, 3,130 days, 1,507,279 rows ==
+PC1 share 0.48  (top-3 eigen shares 0.48, 0.16, 0.08)
+orientation: 0 reversed variant(s) []
+dedup at rho=0.7: 16 variants -> 9 ideas
+    block 1: f3, f5
+    block 2: f10, f16
+    block 3: f8
+    block 4: f2, f14
+    block 5: f4, f12
+    block 6: f13
+    block 7: f1, f6, f7
+    block 8: f9, f11
+    block 9: f15
+PLS-k out-of-fold IC: k=1: +0.0308, k=2: +0.0296, k=3: +0.0281, k=4: +0.0284, k=5: +0.0280, k=6: +0.0279, k=7: +0.0281, k=8: +0.0282  (benchmark +0.0310; best k = 1)
+tau^2 DL/PM/REML: 0.00e+00 / 0.00e+00 / 0.00e+00  (block ICs +0.0192, +0.0194, +0.0157, +0.0236, +0.0292, +0.0174, +0.0262, +0.0227, +0.0216)
+reading:
+  - PC1 share 0.48 >= 0.45: essentially one factor; equal weighting will saturate this class and any supervision is a tax.
+  - PLS sweep peaks at k=1: one predictive direction; any sensible weighting works.
+  - tau^2 = 0 under all three estimators: equal block weights are optimal in-family; walk away.
+  - Selected composite: dedup at rho=0.7, 9 equal-weight blocks, frozen. Run the shape gate separately before adopting learned shapes.

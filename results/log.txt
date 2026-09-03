@@ -1,0 +1,282 @@
+
+Panel(feature_class_1 (in_sample): 1,507,279 rows, 3,130 days, 16 features, flipped=['f4', 'f12'])  reflected=['f4', 'f12']
+== feature_class_1 (in_sample): 16 variants, 3,130 days, 1,507,279 rows ==
+PC1 share 0.48  (top-3 eigen shares 0.48, 0.16, 0.08)
+orientation: 0 reversed variant(s) []
+dedup at rho=0.7: 16 variants -> 9 ideas
+    block 1: f3, f5
+    block 2: f10, f16
+    block 3: f8
+    block 4: f2, f14
+    block 5: f4, f12
+    block 6: f13
+    block 7: f1, f6, f7
+    block 8: f9, f11
+    block 9: f15
+PLS-k out-of-fold IC: k=1: +0.0308, k=2: +0.0296, k=3: +0.0281, k=4: +0.0284, k=5: +0.0280, k=6: +0.0279, k=7: +0.0281, k=8: +0.0282  (benchmark +0.0310; best k = 1)
+tau^2 DL/PM/REML: 0.00e+00 / 0.00e+00 / 0.00e+00  (block ICs +0.0192, +0.0194, +0.0157, +0.0236, +0.0292, +0.0174, +0.0262, +0.0227, +0.0216)
+reading:
+  - PC1 share 0.48 >= 0.45: essentially one factor; equal weighting will saturate this class and any supervision is a tax.
+  - PLS sweep peaks at k=1: one predictive direction; any sensible weighting works.
+  - tau^2 = 0 under all three estimators: equal block weights are optimal in-family; walk away.
+  - Selected composite: dedup at rho=0.7, 9 equal-weight blocks, frozen. Run the shape gate separately before adopting learned shapes.
+shape: (12, 4)
+┌──────────────────┬────────────┬───────────┬────────────┐
+│ method           ┆ cv_mean_ic ┆ cv_ic_std ┆ worst_fold │
+│ ---              ┆ ---        ┆ ---       ┆ ---        │
+│ str              ┆ f64        ┆ f64       ┆ f64        │
+╞══════════════════╪════════════╪═══════════╪════════════╡
+│ cluster_eq_tuned ┆ 0.0314     ┆ 0.0099    ┆ 0.0209     │
+│ cluster_ic_tuned ┆ 0.0312     ┆ 0.0101    ┆ 0.0200     │
+│ naive_averaged   ┆ 0.0310     ┆ 0.0104    ┆ 0.0197     │
+│ eb_weight        ┆ 0.0309     ┆ 0.0104    ┆ 0.0197     │
+│ ic_weight        ┆ 0.0309     ┆ 0.0104    ┆ 0.0190     │
+│ ridge_tuned      ┆ 0.0308     ┆ 0.0104    ┆ 0.0194     │
+│ pls_tuned        ┆ 0.0308     ┆ 0.0105    ┆ 0.0194     │
+│ cluster_eq       ┆ 0.0308     ┆ 0.0105    ┆ 0.0188     │
+│ cluster_eb       ┆ 0.0308     ┆ 0.0105    ┆ 0.0188     │
+│ uniqueness_reg   ┆ 0.0306     ┆ 0.0091    ┆ 0.0208     │
+│ pca_pc1          ┆ 0.0305     ┆ 0.0107    ┆ 0.0179     │
+│ uniqueness_tuned ┆ 0.0287     ┆ 0.0071    ┆ 0.0206     │
+└──────────────────┴────────────┴───────────┴────────────┘
+shape: (11, 4)
+┌──────────────────┬────────────────┬─────────┬─────────┐
+│ method           ┆ vs             ┆ ic_diff ┆ nw_t    │
+│ ---              ┆ ---            ┆ ---     ┆ ---     │
+│ str              ┆ str            ┆ f64     ┆ f64     │
+╞══════════════════╪════════════════╪═════════╪═════════╡
+│ cluster_eq_tuned ┆ naive_averaged ┆ 0.0004  ┆ 1.5507  │
+│ cluster_ic_tuned ┆ naive_averaged ┆ 0.0003  ┆ 0.5106  │
+│ eb_weight        ┆ naive_averaged ┆ -0.0000 ┆ -1.5689 │
+│ ic_weight        ┆ naive_averaged ┆ -0.0001 ┆ -0.2451 │
+│ ridge_tuned      ┆ naive_averaged ┆ -0.0001 ┆ -0.2887 │
+│ pls_tuned        ┆ naive_averaged ┆ -0.0001 ┆ -0.3208 │
+│ cluster_eq       ┆ naive_averaged ┆ -0.0002 ┆ -0.6882 │
+│ cluster_eb       ┆ naive_averaged ┆ -0.0002 ┆ -0.6943 │
+│ uniqueness_reg   ┆ naive_averaged ┆ -0.0004 ┆ -0.2167 │
+│ pca_pc1          ┆ naive_averaged ┆ -0.0004 ┆ -1.1125 │
+│ uniqueness_tuned ┆ naive_averaged ┆ -0.0023 ┆ -0.9040 │
+└──────────────────┴────────────────┴─────────┴─────────┘
+Panel(feature_class_1 (out_of_sample): 931,957 rows, 2,180 days, 16 features, flipped=['f4', 'f12'])
+shape: (5, 8)
+┌────────────────┬─────────┬────────┬───────────┬─────────────┬───────────┬────────┬─────────┐
+│ method         ┆ mean_ic ┆ nw_t   ┆ ic_ir_ann ┆ port_ir_ann ┆ half_life ┆ ret_5d ┆ turn_l5 │
+│ ---            ┆ ---     ┆ ---    ┆ ---       ┆ ---         ┆ ---       ┆ ---    ┆ ---     │
+│ str            ┆ f64     ┆ f64    ┆ f64       ┆ f64         ┆ f64       ┆ f64    ┆ f64     │
+╞════════════════╪═════════╪════════╪═══════════╪═════════════╪═══════════╪════════╪═════════╡
+│ naive_averaged ┆ 0.0118  ┆ 1.8847 ┆ 1.7877    ┆ 2.0775      ┆ 2.5890    ┆ 0.3670 ┆ 0.6204  │
+│ ic_weight      ┆ 0.0119  ┆ 1.8832 ┆ 1.7966    ┆ 2.0704      ┆ 2.7409    ┆ 0.3908 ┆ 0.6155  │
+│ pca_pc1        ┆ 0.0112  ┆ 1.7789 ┆ 1.6759    ┆ 1.9675      ┆ 2.2732    ┆ 0.3148 ┆ 0.6357  │
+│ cluster_eq     ┆ 0.0119  ┆ 1.8886 ┆ 1.8010    ┆ 2.0962      ┆ 2.3947    ┆ 0.3357 ┆ 0.5909  │
+│ cluster_eb     ┆ 0.0119  ┆ 1.8886 ┆ 1.8010    ┆ 2.0962      ┆ 2.3947    ┆ 0.3357 ┆ 0.5909  │
+└────────────────┴─────────┴────────┴───────────┴─────────────┴───────────┴────────┴─────────┘
+class 1 done in 515s
+
+Panel(feature_class_2 (in_sample): 607,189 rows, 1,565 days, 10 features, flipped=[])  reflected=[]
+== feature_class_2 (in_sample): 10 variants, 1,565 days, 607,189 rows ==
+PC1 share 0.51  (top-3 eigen shares 0.51, 0.22, 0.09)
+orientation: 0 reversed variant(s) []
+dedup at rho=0.7: 10 variants -> 4 ideas
+    block 1: f5, f6, f7, f8, f9, f10
+    block 2: f1, f3
+    block 3: f2
+    block 4: f4
+PLS-k out-of-fold IC: k=1: +0.0179, k=2: +0.0133, k=3: +0.0062, k=4: +0.0059, k=5: +0.0046, k=6: +0.0051, k=7: +0.0052, k=8: +0.0051  (benchmark +0.0208; best k = 1)
+tau^2 DL/PM/REML: 0.00e+00 / 0.00e+00 / 0.00e+00  (block ICs +0.0163, +0.0166, +0.0155, +0.0086)
+reading:
+  - PC1 share 0.51 >= 0.45: essentially one factor; equal weighting will saturate this class and any supervision is a tax.
+  - PLS sweep peaks at k=1: one predictive direction; any sensible weighting works.
+  - tau^2 = 0 under all three estimators: equal block weights are optimal in-family; walk away.
+  - Selected composite: dedup at rho=0.7, 4 equal-weight blocks, frozen. Run the shape gate separately before adopting learned shapes.
+shape: (12, 4)
+┌──────────────────┬────────────┬───────────┬────────────┐
+│ method           ┆ cv_mean_ic ┆ cv_ic_std ┆ worst_fold │
+│ ---              ┆ ---        ┆ ---       ┆ ---        │
+│ str              ┆ f64        ┆ f64       ┆ f64        │
+╞══════════════════╪════════════╪═══════════╪════════════╡
+│ cluster_eq       ┆ 0.0216     ┆ 0.0265    ┆ -0.0126    │
+│ cluster_eb       ┆ 0.0216     ┆ 0.0265    ┆ -0.0126    │
+│ eb_weight        ┆ 0.0210     ┆ 0.0324    ┆ -0.0193    │
+│ naive_averaged   ┆ 0.0208     ┆ 0.0325    ┆ -0.0194    │
+│ cluster_eq_tuned ┆ 0.0208     ┆ 0.0276    ┆ -0.0142    │
+│ cluster_ic_tuned ┆ 0.0184     ┆ 0.0251    ┆ -0.0144    │
+│ pca_pc1          ┆ 0.0183     ┆ 0.0333    ┆ -0.0217    │
+│ ic_weight        ┆ 0.0173     ┆ 0.0293    ┆ -0.0205    │
+│ pls_tuned        ┆ 0.0133     ┆ 0.0238    ┆ -0.0194    │
+│ uniqueness_reg   ┆ 0.0132     ┆ 0.0251    ┆ -0.0201    │
+│ uniqueness_tuned ┆ 0.0091     ┆ 0.0213    ┆ -0.0203    │
+│ ridge_tuned      ┆ 0.0090     ┆ 0.0217    ┆ -0.0206    │
+└──────────────────┴────────────┴───────────┴────────────┘
+shape: (11, 4)
+┌──────────────────┬────────────────┬─────────┬─────────┐
+│ method           ┆ vs             ┆ ic_diff ┆ nw_t    │
+│ ---              ┆ ---            ┆ ---     ┆ ---     │
+│ str              ┆ str            ┆ f64     ┆ f64     │
+╞══════════════════╪════════════════╪═════════╪═════════╡
+│ cluster_eq       ┆ naive_averaged ┆ 0.0007  ┆ 0.2190  │
+│ cluster_eb       ┆ naive_averaged ┆ 0.0007  ┆ 0.2190  │
+│ eb_weight        ┆ naive_averaged ┆ 0.0001  ┆ 1.1392  │
+│ cluster_eq_tuned ┆ naive_averaged ┆ -0.0000 ┆ -0.0086 │
+│ cluster_ic_tuned ┆ naive_averaged ┆ -0.0024 ┆ -0.6384 │
+│ pca_pc1          ┆ naive_averaged ┆ -0.0025 ┆ -1.4748 │
+│ ic_weight        ┆ naive_averaged ┆ -0.0035 ┆ -2.4221 │
+│ pls_tuned        ┆ naive_averaged ┆ -0.0075 ┆ -1.8997 │
+│ uniqueness_reg   ┆ naive_averaged ┆ -0.0076 ┆ -2.3649 │
+│ uniqueness_tuned ┆ naive_averaged ┆ -0.0117 ┆ -2.9308 │
+│ ridge_tuned      ┆ naive_averaged ┆ -0.0118 ┆ -2.8149 │
+└──────────────────┴────────────────┴─────────┴─────────┘
+Panel(feature_class_2 (out_of_sample): 931,957 rows, 2,180 days, 10 features, flipped=[])
+shape: (5, 8)
+┌────────────────┬─────────┬────────┬───────────┬─────────────┬───────────┬────────┬─────────┐
+│ method         ┆ mean_ic ┆ nw_t   ┆ ic_ir_ann ┆ port_ir_ann ┆ half_life ┆ ret_5d ┆ turn_l5 │
+│ ---            ┆ ---     ┆ ---    ┆ ---       ┆ ---         ┆ ---       ┆ ---    ┆ ---     │
+│ str            ┆ f64     ┆ f64    ┆ f64       ┆ f64         ┆ f64       ┆ f64    ┆ f64     │
+╞════════════════╪═════════╪════════╪═══════════╪═════════════╪═══════════╪════════╪═════════╡
+│ naive_averaged ┆ 0.0146  ┆ 2.4337 ┆ 3.0011    ┆ 1.6403      ┆ NaN       ┆ 0.9500 ┆ 0.0254  │
+│ ic_weight      ┆ 0.0145  ┆ 2.4656 ┆ 3.0370    ┆ 1.6529      ┆ NaN       ┆ 0.9467 ┆ 0.0256  │
+│ pca_pc1        ┆ 0.0123  ┆ 2.1849 ┆ 2.6638    ┆ 1.3684      ┆ NaN       ┆ 0.9510 ┆ 0.0229  │
+│ cluster_eq     ┆ 0.0175  ┆ 2.6619 ┆ 3.3935    ┆ 2.0511      ┆ NaN       ┆ 0.9465 ┆ 0.0347  │
+│ cluster_eb     ┆ 0.0175  ┆ 2.6619 ┆ 3.3935    ┆ 2.0511      ┆ NaN       ┆ 0.9465 ┆ 0.0347  │
+└────────────────┴─────────┴────────┴───────────┴─────────────┴───────────┴────────┴─────────┘
+class 2 done in 163s
+
+Panel(feature_class_3 (in_sample): 607,002 rows, 1,565 days, 6 features, flipped=[])  reflected=[]
+== feature_class_3 (in_sample): 6 variants, 1,565 days, 607,002 rows ==
+PC1 share 0.53  (top-3 eigen shares 0.53, 0.37, 0.05)
+orientation: 0 reversed variant(s) []
+dedup at rho=0.7: 6 variants -> 2 ideas
+    block 1: f4, f5, f6
+    block 2: f1, f2, f3
+PLS-k out-of-fold IC: k=1: +0.0106, k=2: +0.0090, k=3: +0.0131, k=4: +0.0141, k=5: +0.0138, k=6: +0.0148  (benchmark +0.0125; best k = 6)
+tau^2 DL/PM/REML: 0.00e+00 / 0.00e+00 / 0.00e+00  (block ICs +0.0084, +0.0126)
+reading:
+  - PC1 share 0.53 >= 0.45: essentially one factor; equal weighting will saturate this class and any supervision is a tax.
+  - PLS sweep peaks at k=6: multi-directional signal in-sample. Research flag only; the study's frozen multi-component fits inverted out of sample.
+  - tau^2 = 0 under all three estimators: equal block weights are optimal in-family; walk away.
+  - Selected composite: dedup at rho=0.7, 2 equal-weight blocks, frozen. Run the shape gate separately before adopting learned shapes.
+shape: (12, 4)
+┌──────────────────┬────────────┬───────────┬────────────┐
+│ method           ┆ cv_mean_ic ┆ cv_ic_std ┆ worst_fold │
+│ ---              ┆ ---        ┆ ---       ┆ ---        │
+│ str              ┆ f64        ┆ f64       ┆ f64        │
+╞══════════════════╪════════════╪═══════════╪════════════╡
+│ pls_tuned        ┆ 0.0146     ┆ 0.0090    ┆ 0.0012     │
+│ uniqueness_tuned ┆ 0.0145     ┆ 0.0086    ┆ 0.0025     │
+│ ridge_tuned      ┆ 0.0141     ┆ 0.0094    ┆ 0.0014     │
+│ pca_pc1          ┆ 0.0125     ┆ 0.0131    ┆ -0.0035    │
+│ cluster_eq_tuned ┆ 0.0125     ┆ 0.0134    ┆ -0.0039    │
+│ naive_averaged   ┆ 0.0125     ┆ 0.0134    ┆ -0.0035    │
+│ eb_weight        ┆ 0.0124     ┆ 0.0134    ┆ -0.0036    │
+│ cluster_eq       ┆ 0.0124     ┆ 0.0134    ┆ -0.0036    │
+│ cluster_eb       ┆ 0.0124     ┆ 0.0134    ┆ -0.0036    │
+│ uniqueness_reg   ┆ 0.0114     ┆ 0.0107    ┆ -0.0006    │
+│ ic_weight        ┆ 0.0108     ┆ 0.0119    ┆ -0.0027    │
+│ cluster_ic_tuned ┆ 0.0103     ┆ 0.0112    ┆ -0.0031    │
+└──────────────────┴────────────┴───────────┴────────────┘
+shape: (11, 4)
+┌──────────────────┬────────────────┬─────────┬─────────┐
+│ method           ┆ vs             ┆ ic_diff ┆ nw_t    │
+│ ---              ┆ ---            ┆ ---     ┆ ---     │
+│ str              ┆ str            ┆ f64     ┆ f64     │
+╞══════════════════╪════════════════╪═════════╪═════════╡
+│ pls_tuned        ┆ naive_averaged ┆ 0.0022  ┆ 0.4574  │
+│ uniqueness_tuned ┆ naive_averaged ┆ 0.0020  ┆ 0.4806  │
+│ ridge_tuned      ┆ naive_averaged ┆ 0.0016  ┆ 0.3781  │
+│ pca_pc1          ┆ naive_averaged ┆ 0.0001  ┆ 0.2850  │
+│ cluster_eq_tuned ┆ naive_averaged ┆ 0.0000  ┆ 0.1081  │
+│ eb_weight        ┆ naive_averaged ┆ -0.0000 ┆ -1.6084 │
+│ cluster_eq       ┆ naive_averaged ┆ -0.0000 ┆ -1.6086 │
+│ cluster_eb       ┆ naive_averaged ┆ -0.0000 ┆ -1.6086 │
+│ uniqueness_reg   ┆ naive_averaged ┆ -0.0011 ┆ -0.4525 │
+│ ic_weight        ┆ naive_averaged ┆ -0.0017 ┆ -1.0008 │
+│ cluster_ic_tuned ┆ naive_averaged ┆ -0.0021 ┆ -1.3989 │
+└──────────────────┴────────────────┴─────────┴─────────┘
+Panel(feature_class_3 (out_of_sample): 931,957 rows, 2,180 days, 6 features, flipped=[])
+shape: (5, 8)
+┌────────────────┬─────────┬────────┬───────────┬─────────────┬───────────┬────────┬─────────┐
+│ method         ┆ mean_ic ┆ nw_t   ┆ ic_ir_ann ┆ port_ir_ann ┆ half_life ┆ ret_5d ┆ turn_l5 │
+│ ---            ┆ ---     ┆ ---    ┆ ---       ┆ ---         ┆ ---       ┆ ---    ┆ ---     │
+│ str            ┆ f64     ┆ f64    ┆ f64       ┆ f64         ┆ f64       ┆ f64    ┆ f64     │
+╞════════════════╪═════════╪════════╪═══════════╪═════════════╪═══════════╪════════╪═════════╡
+│ naive_averaged ┆ 0.0133  ┆ 2.6412 ┆ 3.4332    ┆ 3.9401      ┆ NaN       ┆ 0.9733 ┆ 0.0267  │
+│ ic_weight      ┆ 0.0135  ┆ 2.4726 ┆ 3.2342    ┆ 3.7081      ┆ NaN       ┆ 0.9743 ┆ 0.0299  │
+│ pca_pc1        ┆ 0.0133  ┆ 2.6598 ┆ 3.4579    ┆ 3.9700      ┆ NaN       ┆ 0.9737 ┆ 0.0263  │
+│ cluster_eq     ┆ 0.0133  ┆ 2.6397 ┆ 3.4307    ┆ 3.9394      ┆ NaN       ┆ 0.9738 ┆ 0.0267  │
+│ cluster_eb     ┆ 0.0133  ┆ 2.6397 ┆ 3.4307    ┆ 3.9394      ┆ NaN       ┆ 0.9738 ┆ 0.0267  │
+└────────────────┴─────────┴────────┴───────────┴─────────────┴───────────┴────────┴─────────┘
+class 3 done in 125s
+
+Panel(feature_class_4 (in_sample): 1,506,322 rows, 3,130 days, 20 features, flipped=['f10', 'f13', 'f16', 'f19', 'f20'])  reflected=['f10', 'f13', 'f16', 'f19', 'f20']
+== feature_class_4 (in_sample): 20 variants, 3,130 days, 1,506,322 rows ==
+PC1 share 0.30  (top-3 eigen shares 0.30, 0.26, 0.12)
+orientation: 0 reversed variant(s) []
+dedup at rho=0.7: 20 variants -> 8 ideas
+    block 1: f1, f2, f5, f6
+    block 2: f3, f4, f7, f8
+    block 3: f9, f10
+    block 4: f13, f16, f20
+    block 5: f11, f14
+    block 6: f17
+    block 7: f12, f15
+    block 8: f18, f19
+PLS-k out-of-fold IC: k=1: +0.0188, k=2: +0.0176, k=3: +0.0165, k=4: +0.0155, k=5: +0.0141, k=6: +0.0140, k=7: +0.0145, k=8: +0.0146  (benchmark +0.0165; best k = 1)
+tau^2 DL/PM/REML: 2.37e-05 / 2.37e-05 / 1.86e-05  (block ICs +0.0046, +0.0037, +0.0067, +0.0118, +0.0150, +0.0157, +0.0160, +0.0220)
+reading:
+  - PC1 share 0.30: diffuse spectrum, genuinely multi-factor; the partition matters here and the plain rank-and-average is the likely casualty.
+  - PLS sweep peaks at k=1: one predictive direction; any sensible weighting works.
+  - tau^2 > 0 under all three estimators: the blocks truly differ. Keep equal weights (the tilt lost on the blind test) and flag the class for attention.
+  - Selected composite: dedup at rho=0.7, 8 equal-weight blocks, frozen. Run the shape gate separately before adopting learned shapes.
+shape: (12, 4)
+┌──────────────────┬────────────┬───────────┬────────────┐
+│ method           ┆ cv_mean_ic ┆ cv_ic_std ┆ worst_fold │
+│ ---              ┆ ---        ┆ ---       ┆ ---        │
+│ str              ┆ f64        ┆ f64       ┆ f64        │
+╞══════════════════╪════════════╪═══════════╪════════════╡
+│ cluster_ic_tuned ┆ 0.0201     ┆ 0.0084    ┆ 0.0081     │
+│ ic_weight        ┆ 0.0198     ┆ 0.0099    ┆ 0.0069     │
+│ cluster_eb       ┆ 0.0197     ┆ 0.0088    ┆ 0.0075     │
+│ cluster_eq       ┆ 0.0193     ┆ 0.0095    ┆ 0.0067     │
+│ cluster_eq_tuned ┆ 0.0193     ┆ 0.0095    ┆ 0.0067     │
+│ uniqueness_reg   ┆ 0.0186     ┆ 0.0096    ┆ 0.0060     │
+│ eb_weight        ┆ 0.0183     ┆ 0.0101    ┆ 0.0062     │
+│ uniqueness_tuned ┆ 0.0174     ┆ 0.0067    ┆ 0.0068     │
+│ naive_averaged   ┆ 0.0165     ┆ 0.0109    ┆ 0.0050     │
+│ pls_tuned        ┆ 0.0163     ┆ 0.0071    ┆ 0.0055     │
+│ ridge_tuned      ┆ 0.0160     ┆ 0.0069    ┆ 0.0055     │
+│ pca_pc1          ┆ 0.0033     ┆ 0.0091    ┆ -0.0057    │
+└──────────────────┴────────────┴───────────┴────────────┘
+shape: (11, 4)
+┌──────────────────┬────────────────┬─────────┬─────────┐
+│ method           ┆ vs             ┆ ic_diff ┆ nw_t    │
+│ ---              ┆ ---            ┆ ---     ┆ ---     │
+│ str              ┆ str            ┆ f64     ┆ f64     │
+╞══════════════════╪════════════════╪═════════╪═════════╡
+│ cluster_ic_tuned ┆ naive_averaged ┆ 0.0036  ┆ 1.6336  │
+│ ic_weight        ┆ naive_averaged ┆ 0.0033  ┆ 1.8188  │
+│ cluster_eb       ┆ naive_averaged ┆ 0.0032  ┆ 1.8241  │
+│ cluster_eq       ┆ naive_averaged ┆ 0.0028  ┆ 2.2584  │
+│ cluster_eq_tuned ┆ naive_averaged ┆ 0.0028  ┆ 2.2584  │
+│ uniqueness_reg   ┆ naive_averaged ┆ 0.0021  ┆ 1.0273  │
+│ eb_weight        ┆ naive_averaged ┆ 0.0018  ┆ 1.6341  │
+│ uniqueness_tuned ┆ naive_averaged ┆ 0.0009  ┆ 0.4317  │
+│ pls_tuned        ┆ naive_averaged ┆ -0.0002 ┆ -0.0836 │
+│ ridge_tuned      ┆ naive_averaged ┆ -0.0005 ┆ -0.2429 │
+│ pca_pc1          ┆ naive_averaged ┆ -0.0132 ┆ -3.1124 │
+└──────────────────┴────────────────┴─────────┴─────────┘
+Panel(feature_class_4 (out_of_sample): 931,957 rows, 2,180 days, 20 features, flipped=['f10', 'f13', 'f16', 'f19', 'f20'])
+shape: (5, 8)
+┌────────────────┬─────────┬────────┬───────────┬─────────────┬───────────┬────────┬─────────┐
+│ method         ┆ mean_ic ┆ nw_t   ┆ ic_ir_ann ┆ port_ir_ann ┆ half_life ┆ ret_5d ┆ turn_l5 │
+│ ---            ┆ ---     ┆ ---    ┆ ---       ┆ ---         ┆ ---       ┆ ---    ┆ ---     │
+│ str            ┆ f64     ┆ f64    ┆ f64       ┆ f64         ┆ f64       ┆ f64    ┆ f64     │
+╞════════════════╪═════════╪════════╪═══════════╪═════════════╪═══════════╪════════╪═════════╡
+│ naive_averaged ┆ 0.0192  ┆ 3.9423 ┆ 4.5010    ┆ 3.9967      ┆ 17.3512   ┆ 0.8524 ┆ 0.2579  │
+│ ic_weight      ┆ 0.0154  ┆ 2.8643 ┆ 3.4513    ┆ 2.7998      ┆ 19.0907   ┆ 0.8742 ┆ 0.1270  │
+│ pca_pc1        ┆ 0.0063  ┆ 1.6449 ┆ 1.5693    ┆ 1.8955      ┆ 6.1107    ┆ 0.6035 ┆ 0.5246  │
+│ cluster_eq     ┆ 0.0194  ┆ 3.6866 ┆ 4.3694    ┆ 3.6404      ┆ NaN       ┆ 0.8846 ┆ 0.1687  │
+│ cluster_eb     ┆ 0.0163  ┆ 3.0601 ┆ 3.6325    ┆ 2.8622      ┆ 20.7799   ┆ 0.8876 ┆ 0.1437  │
+└────────────────┴─────────┴────────┴───────────┴─────────────┴───────────┴────────┴─────────┘
+class 4 done in 430s
+
+wrote /tmp/claude-1000/-home-hashim-projects-Ultramarin/d929b003-83f8-4707-8b34-2053f4be8e4c/scratchpad/results_linear/summary.md
+exit 0

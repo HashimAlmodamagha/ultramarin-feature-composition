@@ -1,0 +1,13 @@
+== feature_class_3 (in_sample): 6 variants, 1,565 days, 607,002 rows ==
+PC1 share 0.53  (top-3 eigen shares 0.53, 0.37, 0.05)
+orientation: 0 reversed variant(s) []
+dedup at rho=0.7: 6 variants -> 2 ideas
+    block 1: f4, f5, f6
+    block 2: f1, f2, f3
+PLS-k out-of-fold IC: k=1: +0.0106, k=2: +0.0090, k=3: +0.0131, k=4: +0.0141, k=5: +0.0138, k=6: +0.0148  (benchmark +0.0125; best k = 6)
+tau^2 DL/PM/REML: 0.00e+00 / 0.00e+00 / 0.00e+00  (block ICs +0.0084, +0.0126)
+reading:
+  - PC1 share 0.53 >= 0.45: essentially one factor; equal weighting will saturate this class and any supervision is a tax.
+  - PLS sweep peaks at k=6: multi-directional signal in-sample. Research flag only; the study's frozen multi-component fits inverted out of sample.
+  - tau^2 = 0 under all three estimators: equal block weights are optimal in-family; walk away.
+  - Selected composite: dedup at rho=0.7, 2 equal-weight blocks, frozen. Run the shape gate separately before adopting learned shapes.
