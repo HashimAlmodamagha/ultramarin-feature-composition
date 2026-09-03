@@ -7,7 +7,7 @@ from feature_composition import clustering
 
 def test_pc1_alignment_recovers_reversed_variants(panel):
     corr = panel.correlation()
-    aligned, flip = clustering.pc1_sign_align(corr)
+    aligned, _ = clustering.pc1_sign_align(corr)
     # f2 and f6 were stored reversed in the fixture (zero-based 1 and 5)
     assert clustering.orientation_flips(corr, panel.cols) == ["f2", "f6"]
     v = np.linalg.eigh(aligned)[1][:, -1]
