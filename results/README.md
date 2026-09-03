@@ -19,5 +19,8 @@ precision the notebook reports (four decimals for ICs, three for retention and t
 Method names follow the notebook: `naive_averaged` is the benchmark (rank, flip by the
 sign of the training IC, average); `cluster_eq` / `cluster_eb` are the dedup composites at
 the frozen rho = 0.7 with equal / random-effects block weights; `*_tuned` methods choose
-their hyper-parameter on the purged inner validation slice; `cluster_eq_shaped` is the
-shaped arm and `selected (gated)` the composite the gate actually deploys.
+their hyper-parameter on the purged inner validation slice; `cluster_eb_shaped` is the
+shaped arm as the study recorded it (DerSimonian-Laird block weights on the shaped blocks),
+`cluster_eq_shaped` the same with equal block weights, and `selected (gated)` the composite
+the gate actually deploys (`cluster_eb_shaped` where shapes were adopted, `cluster_eq`
+elsewhere).

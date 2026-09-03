@@ -107,10 +107,14 @@ def run_class(
         decision = gate_decision(panel)
         gate_line = str(decision)
         print(gate_line, flush=True)
-        shaped = DedupComposite(shapes=True).fit(panel)
-        frozen["cluster_eq_shaped"] = shaped.transform_panel(oos)
+        # The study's shaped arm (notebook XI.1 `cluster_eb_shaped`, the report's numbers)
+        # pooled the shaped blocks with DerSimonian-Laird weights; the equal-weight version
+        # is reported next to it. On the data they differ by at most 0.0005 daily IC.
+        for name, bw in (("cluster_eb_shaped", "eb"), ("cluster_eq_shaped", "eq")):
+            shaped = DedupComposite(shapes=True, block_weights=bw).fit(panel)  # type: ignore[arg-type]
+            frozen[name] = shaped.transform_panel(oos)
         frozen["selected (gated)"] = frozen[
-            "cluster_eq_shaped" if decision.adopt_shapes else "cluster_eq"
+            "cluster_eb_shaped" if decision.adopt_shapes else "cluster_eq"
         ]
     rows = []
     for name, sig in frozen.items():

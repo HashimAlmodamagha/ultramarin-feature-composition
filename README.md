@@ -61,7 +61,9 @@ feature shapes only where the evidence is strong, and freeze everything.**
 ### Hold-out scorecard (frozen on in-sample, scored once)
 
 Mean daily rank IC on ~2,180 unseen trading days per class, Newey-West t in parentheses;
-`selected` is the shaped dedup composite on class 1 and the plain dedup composite elsewhere.
+`selected` is the shaped dedup composite on class 1 (with the random-effects block weights
+the study recorded; equal block weights give 0.0155, t 2.50) and the plain dedup composite
+elsewhere.
 
 | class | variants → ideas | benchmark (rank-and-average) | dedup + equal weights | selected | 5-day turnover, benchmark → selected |
 |---|---|---|---|---|---|
@@ -159,7 +161,10 @@ feature-composition freeze   --data-dir data --feature-class 1 --shapes --out c1
   re-runs the in-sample cross-validation, the paired tests, the PLS sweep, the diagnostics and
   the frozen hold-out scorecard for all four classes with this package, and writes CSVs plus a
   summary. Run against the Ultramarin data, every value matches the research notebook's
-  checkpoint to the four decimals the notebook reports (the CSVs are in [`results/`](results/)).
+  checkpoint to the precision the notebook reports (154 checked values: CV means, paired
+  tests, PLS sweeps, hold-out ICs, t-statistics, retention and turnover), the gate reproduces
+  the study's four adopt/refuse decisions, and the shaped arm reproduces the report's class-1
+  row exactly. The CSVs are in [`results/`](results/).
 
 ```bash
 git clone https://github.com/HashimAlmodamagha/ultramarin-feature-composition
