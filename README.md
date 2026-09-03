@@ -61,7 +61,7 @@ feature shapes only where the evidence is strong, and freeze everything.**
 
 | step | rule |
 |---|---|
-| 1. Group the duplicates | Average-linkage clustering on `1 - |corr|`; merge variants sharing at least `|corr| = 0.7` (52 variants became 23 ideas across the four classes). The threshold is fixed, not tuned: leak-free tuning was offered twice and never beat it. |
+| 1. Group the duplicates | Average-linkage clustering on `1 - \|corr\|`; merge variants sharing at least `\|corr\| = 0.7` (52 variants became 23 ideas across the four classes). The threshold is fixed, not tuned: leak-free tuning was offered twice and never beat it. |
 | 2. Average within blocks | Flip negative-IC variants, then average each block's members. |
 | 3. Weight ideas equally, freeze | The random-effects tau² detected real heterogeneity on one class; acting on it lost on the blind test. tau² stays as a diagnostic, never as weights. |
 | 4. Shapes only past the gate | Per-feature response curves extracted from a depth-1 boosted fit, adopted only where a two-condition evidence bar clears (accuracy non-inferiority under purged CV plus a strict tradeability win). Empirically class 1 alone: double the half-life at roughly half the turnover, at the same accuracy. |
@@ -144,7 +144,7 @@ feature-composition freeze   --data-dir data --feature-class 1 --shapes --out c1
 | `metrics` | daily rank IC, Newey-West mean/t (numerically identical to statsmodels' HAC, without the dependency), decay and autocorrelation curves, half-life, weekly-book criterion, portfolio IR | Part II |
 | `panel` | `Panel`: complete-case day-sorted panel, per-feature daily IC matrix, purged folds, inner validation split, out-of-fold runner | Parts II, VII |
 | `cv` | purged k-fold with purge and embargo, chronological inner split, `cross_validate`, paired tests against an anchor | Part II |
-| `clustering` | PC1 orientation alignment, redundancy blocks on `1 - |corr|`, block collapse matrix, the alternative partitions used as controls (linkages, IC-profile similarity, divisive, random placebo) | Parts I, VII, IX |
+| `clustering` | PC1 orientation alignment, redundancy blocks on `1 - \|corr\|`, block collapse matrix, the alternative partitions used as controls (linkages, IC-profile similarity, divisive, random placebo) | Parts I, VII, IX |
 | `shrinkage` | DerSimonian-Laird, Paule-Mandel and REML tau², random-effects shrinkage, Hartung-Knapp interval, equal and adaptive block weights | Parts VIII, XII |
 | `linear` | the benchmark, IC weighting, PCA PC1, the uniqueness (ridge-GLS) regression, OLS, ridge, lasso by coordinate descent, NIPALS PLS with the out-of-fold component sweep, the diversification penalty, feature-level random effects | Parts II, III, VII |
 | `cluster_methods` | cluster-then-weight composites (`eq` / `ic` / `gls` / `eb` across blocks), threshold tuning, two-level partial pooling | Parts VII, VIII, IX |
