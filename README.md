@@ -11,7 +11,7 @@ correlated variants of the same idea (different lookbacks, normalizations, resid
 and those variants must somehow become one signal. This repository is my Berkeley MFE
 industry project for Ultramarin on exactly that question:
 **how should a cluster of correlated feature variants be combined into a single composite,
-and does anything beat ranking each variant and averaging?**
+and does anything beat naively ranking each variant and averaging?**
 
 It contains three things:
 
