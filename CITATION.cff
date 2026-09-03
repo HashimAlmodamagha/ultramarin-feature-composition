@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this code or the report, please cite it as below."
+title: "Count Each Idea Once: Building Robust Composites from Correlated Alpha Signals"
+authors:
+  - family-names: Almodamagha
+    given-names: Hashim
+    affiliation: "Master of Financial Engineering, UC Berkeley Haas School of Business"
+date-released: 2026-07-25
+version: 1.0.0
+license: MIT
+repository-code: "https://github.com/HashimAlmodamagha/ultramarin-feature-composition"
+abstract: >-
+  A Berkeley MFE industry project sponsored by Ultramarin. On four anonymized feature
+  classes, composition methods from equal weighting through supervised regressions, PLS,
+  gradient-boosted trees, redundancy-aware clustering and a random-effects estimator borrowed
+  from clinical meta-analysis are evaluated under one fixed framework (daily rank IC with
+  Newey-West significance, signal decay, factor turnover, purged cross-validation) and a
+  final frozen test on a blind hold-out. The selected methodology clusters near-duplicate
+  variants into blocks, averages within blocks, weights the blocks equally, adds learned
+  per-feature transforms only where in-sample evidence supports them, and freezes every
+  parameter.
+keywords:
+  - quantitative finance
+  - alpha signals
+  - feature composition
+  - information coefficient
+  - meta-analysis

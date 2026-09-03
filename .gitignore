@@ -1,0 +1,27 @@
+# The Ultramarin data is proprietary and must never be committed.
+data/
+Data/
+*.parquet
+cache/
+*.pkl
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/

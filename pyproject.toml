@@ -1,0 +1,75 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ultramarin-feature-composition"
+version = "1.0.0"
+description = "Count each idea once: robust composites from clusters of correlated alpha-signal variants."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Hashim Almodamagha" }]
+requires-python = ">=3.10"
+keywords = ["quantitative-finance", "alpha-signals", "feature-composition", "information-coefficient"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Financial and Insurance Industry",
+  "Topic :: Office/Business :: Financial :: Investment",
+]
+dependencies = [
+  "numpy>=1.26",
+  "polars>=1.0",
+  "scipy>=1.11",
+]
+
+[project.optional-dependencies]
+trees = ["xgboost>=2.0"]
+dev = [
+  "pytest>=8",
+  "ruff>=0.6",
+  "mypy>=1.10",
+  "xgboost>=2.0",
+  "statsmodels>=0.14",
+]
+
+[project.scripts]
+feature-composition = "feature_composition.cli:main"
+
+[project.urls]
+Repository = "https://github.com/HashimAlmodamagha/ultramarin-feature-composition"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/feature_composition"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "N", "SIM", "RUF", "NPY"]
+ignore = [
+  "N803", "N806",  # single-letter matrix names (X, Z, B, W) follow the maths in the report
+  "RUF002", "RUF003",  # unicode dashes/greek in comments and docstrings are deliberate
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B011"]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["src", "scripts"]
+strict = true
+warn_return_any = false
+ignore_missing_imports = true
+allow_untyped_calls = true
+disable_error_code = ["import-untyped"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning"]
