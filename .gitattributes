@@ -1,0 +1,5 @@
+# GitHub language statistics: the research notebook is the documentation of the
+# package, not its source; classify the repository by the Python in src/.
+notebooks/*.ipynb linguist-documentation
+docs/** linguist-documentation
+results/** linguist-documentation
