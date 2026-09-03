@@ -25,7 +25,6 @@ import polars as pl
 from numpy.typing import NDArray
 
 from feature_composition import cluster_methods, linear
-from feature_composition.clustering import orientation_flips
 from feature_composition.composite import DedupComposite
 from feature_composition.cv import cross_validate, paired_against
 from feature_composition.diagnostics import diagnose
@@ -62,10 +61,9 @@ def run_class(
     data_dir: Path, n: int, out: Path, tuned: bool, shapes: bool, skip_cv: bool = False
 ) -> dict[str, object]:
     t0 = time.time()
-    raw = Panel.load_class(data_dir, n, "in_sample")
-    flips = orientation_flips(raw.correlation(), raw.cols)
-    panel = Panel.load_class(data_dir, n, "in_sample", reflect=flips) if flips else raw
-    print(f"\n{panel}  reflected={flips}", flush=True)
+    panel = Panel.load_class(data_dir, n, "in_sample").align_orientation()
+    flips = panel.flipped
+    print(f"\n{panel}", flush=True)
 
     # --- in-sample: diagnostics, purged CV, paired tests, PLS sweep ---------------------
     card = diagnose(panel)

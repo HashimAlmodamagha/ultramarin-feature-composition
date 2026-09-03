@@ -95,7 +95,10 @@ return). The Ultramarin files were one parquet for the features and one for the 
 ```python
 from feature_composition import DedupComposite, Panel, diagnose, gate_decision
 
-train = Panel.from_parquet("data/class_in_sample.parquet", "data/class_target_in_sample.parquet")
+# 0. load, drop incomplete rows, and fix the orientation artifact (target-free PC1 alignment)
+train = Panel.from_parquet(
+    "data/class_in_sample.parquet", "data/class_target_in_sample.parquet"
+).align_orientation()
 
 # 1. read the class before touching a weight: PC1 share, merge tree, PLS-k sweep, tau²
 print(diagnose(train).render())

@@ -134,6 +134,27 @@ class Panel:
             n_folds=n_folds,
         )
 
+    def align_orientation(self) -> Panel:
+        """Reflect the variants that PC1 alignment flags as reversed (target-free, idempotent).
+
+        This is the study's first step on every class: one theme measured with inconsistent
+        sign conventions becomes one coherent block. The returned panel records what was
+        flipped so that a hold-out panel can be built with the same ``reflect`` list.
+        """
+        from feature_composition.clustering import orientation_flips
+
+        flips = orientation_flips(self.correlation(), self.cols)
+        if not flips:
+            return self
+        return Panel(
+            self.frame,
+            self.cols,
+            reflect=[*self.flipped, *flips],
+            horizon=self.horizon,
+            n_folds=self.n_folds,
+            name=self.name,
+        )
+
     def subset(self, feature_idx: Iterable[int]) -> Panel:
         """A view of the panel restricted to some feature columns (for the drop-menu tests).
 

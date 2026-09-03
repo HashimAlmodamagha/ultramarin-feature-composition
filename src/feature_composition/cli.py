@@ -32,6 +32,8 @@ from feature_composition.panel import Panel
 
 
 def _load(args: argparse.Namespace, split: str = "in_sample") -> Panel:
+    if args.reflect == "auto":
+        return Panel.load_class(args.data_dir, args.feature_class, split).align_orientation()
     reflect = [c for c in (args.reflect or "").split(",") if c]
     return Panel.load_class(args.data_dir, args.feature_class, split, reflect=reflect)
 
@@ -148,7 +150,10 @@ def build_parser() -> argparse.ArgumentParser:
         )
         sp.add_argument("--feature-class", type=int, required=True, help="class number, e.g. 1")
         sp.add_argument(
-            "--reflect", default="", help="comma-separated variants to reflect (x -> 1-x)"
+            "--reflect",
+            default="auto",
+            help="'auto' (PC1 alignment, default), '' for none, or comma-separated variants "
+            "to reflect as x -> 1-x",
         )
         sp.add_argument("--rho", type=float, default=0.7, help="merge threshold on |corr|")
 
