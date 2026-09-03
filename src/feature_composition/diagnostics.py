@@ -27,8 +27,11 @@ from feature_composition import linear
 from feature_composition.clustering import (
     RECIPE_RHO,
     cluster_labels,
+    coherence,
     eigen_shares,
     orientation_flips,
+    orientation_is_artifact,
+    pc1_sign_align,
 )
 from feature_composition.composite import DedupComposite
 
@@ -127,10 +130,18 @@ def diagnose(panel: Panel, rho: float = RECIPE_RHO, run_pls_sweep: bool = True) 
         )
     else:
         notes.append(f"PC1 share {pc1:.2f}: intermediate; check the merge tree for clean blocks.")
-    if reversed_variants:
+    if reversed_variants and orientation_is_artifact(corr):
         notes.append(
-            f"{len(reversed_variants)} variant(s) reversed by PC1 alignment: fix the "
-            "orientation before anything else, and take at least one sign from the target."
+            f"{len(reversed_variants)} variant(s) reversed by PC1 alignment and reflecting them "
+            f"raises the mean correlation {coherence(corr):.2f} -> "
+            f"{coherence(pc1_sign_align(corr)[0]):.2f}: an orientation artifact. Fix it before "
+            "anything else, and take at least one sign from the target."
+        )
+    elif reversed_variants:
+        notes.append(
+            f"PC1 flags {len(reversed_variants)} variant(s) but reflecting them lowers the mean "
+            f"correlation {coherence(corr):.2f} -> {coherence(pc1_sign_align(corr)[0]):.2f}: "
+            "genuine sub-theme disagreement, not an orientation artifact. Leave them as they are."
         )
     if run_pls_sweep:
         k_best = int(sweep["k"][int(np.argmax(sweep["mean"]))])

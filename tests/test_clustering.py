@@ -28,6 +28,27 @@ def test_reflecting_removes_the_orientation_artifact(frame, panel):
     assert auto.n_rows == panel.n_rows and auto.cols == panel.cols
 
 
+def test_alignment_is_applied_only_when_it_raises_coherence(frame, panel):
+    from feature_composition.panel import Panel
+    from feature_composition.synthetic import make_panel_frame
+
+    assert clustering.orientation_is_artifact(panel.correlation())
+    # independent ideas (no common factor): PC1 has nothing coherent to align, so whatever it
+    # flags must not be reflected and the panel comes back untouched
+    multi = Panel(
+        make_panel_frame(n_days=60, n_names=60, block_sizes=(3, 3, 3), common_factor=0.0, seed=4),
+        name="multi",
+    )
+    corr = multi.correlation()
+    if clustering.orientation_flips(corr, multi.cols):
+        aligned, _ = clustering.pc1_sign_align(corr)
+        assert clustering.orientation_is_artifact(corr) == (
+            clustering.coherence(aligned) > clustering.coherence(corr)
+        )
+    out = multi.align_orientation()
+    assert clustering.coherence(out.correlation()) >= clustering.coherence(corr) - 1e-12
+
+
 def test_cluster_labels_limits_and_block_structure(panel):
     corr = panel.correlation()
     singletons = clustering.cluster_labels(corr, rho=0.999)

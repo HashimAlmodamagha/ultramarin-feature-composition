@@ -135,16 +135,20 @@ class Panel:
         )
 
     def align_orientation(self) -> Panel:
-        """Reflect the variants that PC1 alignment flags as reversed (target-free, idempotent).
+        """Reflect the PC1-flagged variants when that removes an orientation artifact.
 
-        This is the study's first step on every class: one theme measured with inconsistent
-        sign conventions becomes one coherent block. The returned panel records what was
-        flipped so that a hold-out panel can be built with the same ``reflect`` list.
+        This is the study's first step on every class (target-free and idempotent): one theme
+        measured with inconsistent sign conventions becomes one coherent block. Flagged
+        variants are reflected only if doing so raises the cluster's mean correlation; when
+        it lowers it, the disagreement is genuine multi-factor structure and the panel is
+        returned unchanged. The returned panel records what was flipped so that a hold-out
+        panel can be built with the same ``reflect`` list.
         """
-        from feature_composition.clustering import orientation_flips
+        from feature_composition.clustering import orientation_flips, orientation_is_artifact
 
-        flips = orientation_flips(self.correlation(), self.cols)
-        if not flips:
+        corr = self.correlation()
+        flips = orientation_flips(corr, self.cols)
+        if not flips or not orientation_is_artifact(corr):
             return self
         return Panel(
             self.frame,

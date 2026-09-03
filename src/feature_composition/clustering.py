@@ -45,6 +45,26 @@ def orientation_flips(corr: NDArray[np.float64], cols: list[str]) -> list[str]:
     return [c for c, f in zip(cols, flip, strict=True) if f < 0]
 
 
+def coherence(corr: NDArray[np.float64]) -> float:
+    """Mean off-diagonal correlation: how much one coherent block the cluster forms."""
+    iu = np.triu_indices_from(corr, k=1)
+    return float(corr[iu].mean())
+
+
+def orientation_is_artifact(corr: NDArray[np.float64]) -> bool:
+    """Whether reflecting the PC1-flagged variants makes the cluster MORE coherent.
+
+    Two things hide in a correlation matrix and only one is fixable. An orientation artifact
+    (one theme, inconsistent sign conventions) turns into a single coherent block once the
+    flagged variants are reflected; the study's class 1 went from a mean correlation of 0.21
+    to 0.44. Genuine sub-theme disagreement does the opposite: reflecting class 4's flagged
+    variants lowered its coherence, so its negative loadings were left alone as real
+    multi-factor structure.
+    """
+    aligned, flip = pc1_sign_align(corr)
+    return bool((flip < 0).any() and coherence(aligned) > coherence(corr))
+
+
 def _condensed(dist: NDArray[np.float64]) -> NDArray[np.float64]:
     d = dist.copy()
     np.fill_diagonal(d, 0.0)
