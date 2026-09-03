@@ -5,7 +5,7 @@
 | 1 | 16 | 9 | 0.48 | 3,130 | 2,180 | ['f4', 'f12'] |
 | 2 | 10 | 4 | 0.51 | 1,565 | 2,180 | [] |
 | 3 | 6 | 2 | 0.53 | 1,565 | 2,180 | [] |
-| 4 | 20 | 8 | 0.30 | 3,130 | 2,180 | ['f10', 'f13', 'f16', 'f19', 'f20'] |
+| 4 | 20 | 8 | 0.30 | 3,130 | 2,180 | [] |
 
 ## Purged-CV mean IC (in-sample)
 
@@ -33,8 +33,8 @@
 | pca_pc1 | 0.0112 (t 1.78) | 0.0123 (t 2.18) | 0.0133 (t 2.66) | 0.0063 (t 1.64) |
 | cluster_eq | 0.0119 (t 1.89) | 0.0175 (t 2.66) | 0.0133 (t 2.64) | 0.0194 (t 3.69) |
 | cluster_eb | 0.0119 (t 1.89) | 0.0175 (t 2.66) | 0.0133 (t 2.64) | 0.0163 (t 3.06) |
-| cluster_eb_shaped | 0.0154 (t 2.45) | 0.0147 (t 3.06) | 0.0027 (t 0.62) | 0.0183 (t 3.59) |
-| cluster_eq_shaped | 0.0155 (t 2.50) | 0.0151 (t 3.16) | 0.0027 (t 0.62) | 0.0188 (t 3.72) |
+| cluster_eb_shaped | 0.0154 (t 2.45) | 0.0147 (t 3.06) | 0.0027 (t 0.62) | 0.0183 (t 3.61) |
+| cluster_eq_shaped | 0.0155 (t 2.50) | 0.0151 (t 3.16) | 0.0027 (t 0.62) | 0.0187 (t 3.71) |
 | selected (gated) | 0.0154 (t 2.45) | 0.0175 (t 2.66) | 0.0133 (t 2.64) | 0.0194 (t 3.69) |
 
 ### Gate, class 1
@@ -65,6 +65,6 @@ REFUSE shapes (keep the linear composite)
 
 ```
 REFUSE shapes (keep the linear composite)
-  A  accuracy non-inferiority: oof diff -0.0074, NW t -2.97 (need > -2) -> fail
-  B  tradeability win: ret_5d 0.928 vs 0.898, turn_5d 0.103 vs 0.159 -> pass
+  A  accuracy non-inferiority: oof diff -0.0072, NW t -2.91 (need > -2) -> fail
+  B  tradeability win: ret_5d 0.929 vs 0.898, turn_5d 0.101 vs 0.159 -> pass
 ```
